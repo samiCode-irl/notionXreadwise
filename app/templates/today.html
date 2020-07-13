@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Daily Review{% endblock %}
+{% block title %}Daily{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -13,7 +13,10 @@
         <h3>{{highlight['title']}}</h3>
         <h6 class="text-secondary">by {{highlight['author']}}</h6>
         <p>{{highlight['highlight']}}</p>
-        <span class="badge badge-pill badge-dark">{{highlight['tags']}}</span>
+        {% set tags = highlight['tags'].split("\'")%}
+        {% for tag in tags %}
+        <span class="badge badge-pill badge-dark">{{tag}}</span>
+        {% endfor %}
         <hr class="mt-5 mb-5">
         {% endfor %}
     </div>
