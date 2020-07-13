@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="container text-center">
+    <br>
+    <h3>Get the most out of what you read</h3>
+    <p class="lead">Notion X Readwise makes it easy to revisit and learn from your <span
+            style="background-color: #fff7ca; background-image: linear-gradient(to right, #fff2ac, #fff7ca); padding-left: 1px; padding-right: 3px;">notion
+            highlights</span></p>
+    <button type="button" class="btn lead btn-primary btn-sm"><b>GET STARTED FOR FREE</b></button>
+    <br><br>
+    <div class="row">
+        <img class="col col-lg-7 col-sm-6 mx-auto d-block"
+            src="{{ url_for('static', filename='/images/mockup.png')}}" alt="mockup">
+    </div>
+
+    <!-- Arrow -->
+    <br>
+    <a href="#highlights"><img width="20" class="mx-auto d-block" src="{{ url_for('static', filename='/images/arrow.png')}}"
+            alt="arrow"></a>
+    <br>
+
+    <!-- 3 Grids -->
+    <div id="grid">
+        <h3 class="text-center">Here's how Readwise works</h3>
+        <br>
+        <div class="row col-11 mx-auto">
+            <div class="col">
+                <img width="150" class="mx-auto d-block" src="{{ url_for('static', filename='/images/sync.png')}}"
+                    alt="sync">
+                <p class="lead text-center"><b>Sync </b>your highlights from your notion database</p>
+            </div>
+            <div class="col">
+                <img width="150" class="mx-auto d-block" src="{{ url_for('static', filename='/images/wisdom.png')}}"
+                    alt="wisdom">
+                <p class="lead text-center"><b>Review </b>the best parts easily through the daily review </p>
+            </div>
+            <div class="col">
+                <img width="150" class="mx-auto d-block" src="{{ url_for('static', filename='/images/organize.png')}}"
+                alt="organize">
+                <p class="lead text-center"><b>Remember </b>more and grow your knowledge over time</p>
+            </div>
+        </div>
+        <hr class="mt-5 mb-5">
+    </div>
+    
+    <!-- Stop Forgetting -->
+    <div id="highlights">
+        <div class="row text-left">
+            <div class="col-lg-8 col-sm-12">
+                <h3>Actually use your highlights</h3>
+                <br>
+                <p class="lead ">Highlighting is great, but what's the point if you're never going to see any of those highlights again?<br> <br>Readwise lets you quickly liberate your highlights (all into one place), and ensures that you'll actually see and use them.</p>
+                <br>
+                <a href="/add" class="lead text-primary"><b>Liberate your reading data <span style="position: relative; bottom: 1px; left: 2px;">→</span></b></a>
+            </div>
+            <div class="col-lg-3 col-sm-12">
+                <img width="95%" class="mx-auto d-block" src="{{ url_for('static', filename='/images/use.png')}}" alt="student">
+            </div>
+        </div>
+        <hr class="mt-5 mb-5">
+    </div>
+    
+    <!-- Sign Up -->
+    <div class="signup text-center">
+        <h3>Start reading with superpowers</h3>
+        <br>
+        <button type="button" class="btn lead btn-primary btn-sm"><b>GET STARTED FOR FREE</b></button>
+        <br><br><br>
+    </div>
+</div>
+
+
+{% endblock %}
