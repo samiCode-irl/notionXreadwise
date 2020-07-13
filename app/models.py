@@ -8,7 +8,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    token_v2 = db.Column(db.String(156), nullable=False, default=dummy_token_v2)
+    token_v2 = db.Column(db.String(156), nullable=False,
+                         default=dummy_token_v2)
     password = db.Column(db.String(60), nullable=False)
     highlights = db.relationship('Highlight', backref='curator', lazy=True)
 

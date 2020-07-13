@@ -1,4 +1,4 @@
-# from app import app
+from app import app
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
@@ -18,7 +18,7 @@ class SignUpForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[
                                      DataRequired(), EqualTo('password')])
     token_v2 = StringField('Notion OAuth Code', validators=[
-                           Optional(my_length_check)])
+                           my_length_check, Optional()])
     submit = SubmitField('Sign Up')
 
 
