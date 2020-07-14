@@ -12,9 +12,10 @@ psycopg2-binary = "*"
 flask-sqlalchemy = "*"
 gunicorn = "*"
 flask-wtf = "*"
-email-validator = "*"
 flask-bcrypt = "*"
 flask-login = "*"
+email-validator = "*"
+notion = "*"
 
 [requires]
 python_version = "3.8"

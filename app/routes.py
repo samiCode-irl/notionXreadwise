@@ -4,7 +4,8 @@ from datetime import date
 from app.forms import SignUpForm, LoginForm
 from app.models import User, Highlight
 from flask_login import login_user, current_user, logout_user, login_required
-
+from notion.client import NotionClient
+from app.notion import get_Highlights, get_daily_highlights
 
 
 @app.route('/')
@@ -63,14 +64,16 @@ def login():
 @login_required
 def today():
     today = date.today()
-    return render_template('today.html', today=today.strftime("%b %d, %Y"))
+    highlights = get_daily_highlights()
+    return render_template('today.html', highlights=highlights, today=today.strftime("%b %d, %Y"))
 
 
 # To show all the highlights in the web app database
 @app.route('/highlights')
 @login_required
 def highlights():
-    return render_template('highlights.html')
+    highlights = db.session.query(Highlight).filter(Highlight.user_id == current_user.id)
+    return render_template('highlights.html', highlights=highlights)
 
 
 # To add highlights into the webapp
@@ -79,8 +82,11 @@ def highlights():
 def add():
     if request.method == 'GET':
         return render_template('add.html')
+    else:
+        get_Highlights(request.form.get('link'))
+        flash('Highlights added successfully.', 'success')
 
-    return render_template('add.html')
+    return redirect(url_for('add'))
 
 
 # for logging out

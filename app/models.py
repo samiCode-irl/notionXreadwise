@@ -23,7 +23,7 @@ class Highlight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), nullable=False)
     author = db.Column(db.String(30))
-    highlight = db.Column(db.Text, nullable=False)
+    highlight = db.Column(db.Text(), nullable=False)
     tags = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 

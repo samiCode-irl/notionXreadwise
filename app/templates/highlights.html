@@ -3,25 +3,27 @@
 {% block title %}Highlights{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <br>
-        <h1 class="text-center">Highlights</h1>
-        <br>
-        <a class="btn btn-outline-dark btn-lg btn-block" href="/add">Add more highlights</a>
-        <hr class="mt-5 mb-5">
-    
-        <div class="col">
-            {% for highlight in highlights %}
-            <h3>{{highlight['title']}}</h3>
-            <h6 class="text-secondary">by {{highlight['author']}}</h6>
-            <p>{{highlight['highlight']}}</p>
-            {% set tags = highlight['tags'].split("\'")%}
-            {% for tag in tags %}
-            <span class="badge badge-pill badge-dark">{{tag}}</span>
-            {% endfor %}
-            <hr class="mt-5 mb-5">
-            {% endfor %}
-        </div>
+<div class="container">
+    <br>
+    <h1 class="text-center">Highlights</h1>
+    <br>
+    <a class="btn btn-outline-dark btn-lg btn-block" href="/add">Add more highlights</a>
+    <hr class="mt-5 mb-5">
 
+    <div class="col">
+        {% for highlight in highlights %}
+        <h3>{{highlight['title']}}</h3>
+        <h6 class="text-secondary">by {{highlight['author']}}</h6>
+        <p>{{highlight['highlight']}}</p>
+        {% set tags = highlight['tags'].split("\'")%}
+        {% for tag in tags %}
+        {% if tag|length > 2 %}
+        <span class="badge badge-pill badge-dark">{{tag}}</span>
+        {% endif %}
+        {% endfor %}
+        <hr class="mt-5 mb-5">
+        {% endfor %}
     </div>
+
+</div>
 {% endblock %}

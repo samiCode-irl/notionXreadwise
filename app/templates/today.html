@@ -15,7 +15,9 @@
         <p>{{highlight['highlight']}}</p>
         {% set tags = highlight['tags'].split("\'")%}
         {% for tag in tags %}
+        {% if tag|length > 2 %}
         <span class="badge badge-pill badge-dark">{{tag}}</span>
+        {% endif %}
         {% endfor %}
         <hr class="mt-5 mb-5">
         {% endfor %}
