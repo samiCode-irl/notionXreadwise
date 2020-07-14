@@ -1,7 +1,8 @@
-from app import app
+from app import app, bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
+from app.models import User
 
 
 def my_length_check(form, field):
@@ -20,6 +21,18 @@ class SignUpForm(FlaskForm):
     token_v2 = StringField('Notion OAuth Code', validators=[
                            my_length_check, Optional()])
     submit = SubmitField('Sign Up')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError(
+                'That username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError(
+                'That email is taken. Please choose a different one.')
 
 
 class LoginForm(FlaskForm):

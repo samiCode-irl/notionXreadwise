@@ -1,15 +1,16 @@
-from app import db
+from app import db, login_manager
+from flask_login import UserMixin
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
-class User(db.Model):
-    # Dummy token_v2
-    dummy_token_v2 = 'a08d5b0a9c758029ce4178b82cb142b0b778f04fb1971c3e8bc8f1b314c1d2b1b3636a874287baccfddd57dbf4912cdb47d62c493bbb067bcbdb0e72a3fd890a4469752808122bc650c6033ab563'
+class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    token_v2 = db.Column(db.String(156), nullable=False,
-                         default=dummy_token_v2)
+    token_v2 = db.Column(db.Text(156), nullable=False)
     password = db.Column(db.String(60), nullable=False)
     highlights = db.relationship('Highlight', backref='curator', lazy=True)
 
