@@ -1,0 +1,51 @@
+{% extends "layout.html"%}
+
+{% block body %}
+<div class="col-md-4 mx-auto text-center">
+    <div class="mt-4 mb-4">
+        <img width="100" src="{{ url_for('static', filename='/images/logo.png')}}" alt="logo">
+    </div>
+    <form action="/Login" method="POST">
+        {{ form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend>Please Sign In!</legend>
+            <br>
+            <div class="form-group">
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid", placeholder="Email Address")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control", placeholder="Email Address")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid", placeholder="Password")}}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control", placeholder="Password")}}
+                {% endif %}
+            </div>
+            <div class="form-check">
+                {{form.remember(class="form-check-input")}}
+                {{form.remember.label(class="form-check-label")}}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary btn-block")}}
+        </div>
+    </form>
+
+    <div class="border-top pt-2">
+        <small class="text-muted">Don't have an account yet? <a href="{{ url_for('signup')}}">Sign Up</a></small>
+    </div>
+</div>
+{% endblock %}

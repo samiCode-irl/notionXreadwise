@@ -11,6 +11,8 @@ psycopg2 = "*"
 psycopg2-binary = "*"
 flask-sqlalchemy = "*"
 gunicorn = "*"
+flask-wtf = "*"
+email-validator = "*"
 
 [requires]
 python_version = "3.8"
