@@ -1,7 +1,9 @@
-from app import app
 from flask import render_template, request, url_for, flash, redirect
+from app import app
 from datetime import date
 from app.forms import SignUpForm, LoginForm
+from app.models import User, Highlight
+
 
 @app.route('/')
 def index():
@@ -18,6 +20,7 @@ def signup():
         return redirect(url_for('index'))
 
     return render_template('signup.html', form=form)
+
 
 # For Logging into the Account
 @app.route('/Login', methods=['GET', 'POST'])
@@ -39,10 +42,12 @@ def today():
     today = date.today()
     return render_template('today.html', today=today.strftime("%b %d, %Y"))
 
+
 # To show all the highlights in the web app database
 @app.route('/highlights')
 def highlights():
     return render_template('highlights.html')
+
 
 # To add highlights into the webapp
 @app.route('/add', methods=['GET', 'POST'])
@@ -51,4 +56,3 @@ def add():
         return render_template('add.html')
 
     return render_template('add.html')
-
