@@ -1,7 +1,7 @@
 from flask_login import current_user
 from notion.client import NotionClient
 from app.models import Highlight
-from sqlalchemy import desc, func
+from sqlalchemy import func
 from app import db
 
 
