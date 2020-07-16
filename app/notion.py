@@ -4,6 +4,7 @@ from app.models import Highlight
 from sqlalchemy import func
 from app import db
 
+previous_data = dict()
 
 # Get Client
 def notion_client():
@@ -25,8 +26,15 @@ def get_Highlights(link):
 
     db.session.commit()
 
-
+# Filter 5 random highlights from the database
 def get_daily_highlights():
     highlights = Highlight.query.filter(
         Highlight.user_id == current_user.id).order_by(func.random()).limit(5).all()
     return highlights
+
+def compare_highlights(highlights, time):
+    if time not in previous_data:
+        previous_data[time] = highlights
+        return previous_data[time]
+    else:
+        return previous_data[time]

@@ -4,7 +4,7 @@ from datetime import date
 from app.forms import SignUpForm, LoginForm
 from app.models import User, Highlight
 from flask_login import login_user, current_user, logout_user, login_required
-from app.notion import get_Highlights, get_daily_highlights
+from app.notion import get_Highlights, get_daily_highlights, compare_highlights, previous_data
 
 
 @app.route('/')
@@ -64,6 +64,8 @@ def login():
 def today():
     today = date.today()
     highlights = get_daily_highlights()
+    highlights = compare_highlights(highlights, today)
+    
     return render_template('today.html', highlights=highlights, today=today.strftime("%b %d, %Y"))
 
 
