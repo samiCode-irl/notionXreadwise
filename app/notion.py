@@ -27,5 +27,6 @@ def get_Highlights(link):
 
 
 def get_daily_highlights():
-    highlights = Highlight.query.filter(Highlight.user_id == current_user.id).order_by(func.random()).limit(5).all()
+    highlights = Highlight.query.filter(
+        Highlight.user_id == current_user.id).order_by(func.random()).limit(5).all()
     return highlights

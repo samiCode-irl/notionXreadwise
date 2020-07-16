@@ -4,7 +4,6 @@ from datetime import date
 from app.forms import SignUpForm, LoginForm
 from app.models import User, Highlight
 from flask_login import login_user, current_user, logout_user, login_required
-from notion.client import NotionClient
 from app.notion import get_Highlights, get_daily_highlights
 
 
@@ -34,7 +33,7 @@ def signup():
             user.token_v2 = dummy_token_v2
         db.session.add(user)
         db.session.commit()
-        flash(f'Your account has been created successfully. You can log in now.', 'success')
+        flash('Your account has been created successfully. You can log in now.', 'success')
         return redirect(url_for('login'))
 
     return render_template('signup.html', form=form)
@@ -72,7 +71,8 @@ def today():
 @app.route('/highlights')
 @login_required
 def highlights():
-    highlights = db.session.query(Highlight).filter(Highlight.user_id == current_user.id)
+    highlights = db.session.query(Highlight).filter(
+        Highlight.user_id == current_user.id)
     return render_template('highlights.html', highlights=highlights)
 
 
