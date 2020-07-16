@@ -7,13 +7,15 @@ from app import db
 previous_data = dict()
 
 # Get Client
+
+
 def notion_client():
     client = NotionClient(token_v2=current_user.token_v2)
     return client
 
 
 # Get Highlights
-def get_Highlights(link):
+def get_highlights(link):
     client = notion_client()
     page = client.get_block(link)
 
@@ -26,15 +28,24 @@ def get_Highlights(link):
 
     db.session.commit()
 
+
 # Filter 5 random highlights from the database
-def get_daily_highlights():
+def get_daily_highlights(no):
     highlights = Highlight.query.filter(
-        Highlight.user_id == current_user.id).order_by(func.random()).limit(5).all()
+        Highlight.user_id == current_user.id).order_by(func.random()).limit(no).all()
     return highlights
 
+
+# Compare highlights
 def compare_highlights(highlights, time):
     if time not in previous_data:
         previous_data[time] = highlights
         return previous_data[time]
     else:
-        return previous_data[time]
+        confirmed_list = previous_data[time]
+        for i in confirmed_list:
+            if i.user_id != current_user.id:
+                confirmed_list.pop(i)
+                confirmed_list.append(get_daily_highlights(1))
+
+        return confirmed_list
