@@ -4,7 +4,7 @@ from datetime import date
 from app.forms import SignUpForm, LoginForm
 from app.models import User, Highlight
 from flask_login import login_user, current_user, logout_user, login_required
-from app.notion import get_Highlights, get_daily_highlights, compare_highlights, previous_data
+from app.notion import get_highlights, get_daily_highlights, compare_highlights, previous_data
 
 
 @app.route('/')
@@ -63,7 +63,7 @@ def login():
 @login_required
 def today():
     today = date.today()
-    highlights = get_daily_highlights()
+    highlights = get_daily_highlights(5)
     highlights = compare_highlights(highlights, today)
     
     return render_template('today.html', highlights=highlights, today=today.strftime("%b %d, %Y"))
@@ -73,8 +73,11 @@ def today():
 @app.route('/highlights')
 @login_required
 def highlights():
-    highlights = db.session.query(Highlight).filter(
-        Highlight.user_id == current_user.id)
+    # highlights = db.session.query(Highlight).filter(
+    #     Highlight.user_id == current_user.id)
+    page = request.args.get('page', 1, type=int)
+    highlights = Highlight.query.filter(
+        Highlight.user_id == current_user.id).order_by(Highlight.id.desc()).paginate(page=page, per_page=5)
     return render_template('highlights.html', highlights=highlights)
 
 
@@ -85,7 +88,7 @@ def add():
     if request.method == 'GET':
         return render_template('add.html')
     else:
-        get_Highlights(request.form.get('link'))
+        get_highlights(request.form.get('link'))
         flash('Highlights added successfully.', 'success')
 
     return redirect(url_for('add'))
