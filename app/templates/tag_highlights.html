@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}{{tag.title()}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="mt-5 text-center">Tag: {{tag.title()}} ({{highlights|length}})</h2>
+    <hr class="mt-5 mb-5">
+
+    <div class="col">
+        {% for highlight in highlights %}
+        <h3>{{highlight['title']}}</h3>
+        <h6 class="text-secondary">by {{highlight['author']}}</h6>
+        <p>{{highlight['highlight']}}</p>
+        {% set tags = highlight['tags'].split("\'")%}
+            {% for i in tags %}
+                {% if i|length > 2 %}
+                    {% if i == tag.title() %}
+                    <a  href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-dark">{{i}}</span></a>
+                    {% else %}
+                    <a  href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-light">{{i}}</span></a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        <hr class="mt-5 mb-5">
+        {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}

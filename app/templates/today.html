@@ -14,9 +14,9 @@
         <h6 class="text-secondary">by {{highlight['author']}}</h6>
         <p>{{highlight['highlight']}}</p>
         {% set tags = highlight['tags'].split("\'")%}
-        {% for tag in tags %}
-        {% if tag|length > 2 %}
-        <span class="badge badge-pill badge-dark">{{tag}}</span>
+        {% for i in tags %}
+        {% if i|length > 2 %}
+        <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-dark">{{i}}</span></a>
         {% endif %}
         {% endfor %}
         <hr class="mt-5 mb-5">

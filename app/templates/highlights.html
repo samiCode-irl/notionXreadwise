@@ -16,23 +16,23 @@
         <h6 class="text-secondary">by {{highlight['author']}}</h6>
         <p>{{highlight['highlight']}}</p>
         {% set tags = highlight['tags'].split("\'")%}
-            {% for tag in tags %}
-                {% if tag|length > 2 %}
-                <span class="badge badge-pill badge-dark">{{tag}}</span>
-                {% endif %}
-            {% endfor %}
+        {% for i in tags %}
+        {% if i|length > 2 %}
+        <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-dark">{{i}}</span></a>
+        {% endif %}
+        {% endfor %}
         <hr class="mt-5 mb-5">
         {% endfor %}
     </div>
     <div class="text-center">
         {% for page_num in highlights.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if highlights.page == page_num %}
-                <a class="btn btn-dark mb-5" href="{{ url_for('highlights', page=page_num) }}">{{page_num}}</a>
-            {% elif page_num is number %}
-                <a class="btn btn-outline-dark mb-5" href="{{ url_for('highlights', page=page_num) }}">{{page_num}}</a>
-            {% endif %}
+        {% if highlights.page == page_num %}
+        <a class="btn btn-dark mb-5" href="{{ url_for('highlights', page=page_num) }}">{{page_num}}</a>
+        {% elif page_num is number %}
+        <a class="btn btn-outline-dark mb-5" href="{{ url_for('highlights', page=page_num) }}">{{page_num}}</a>
+        {% endif %}
         {% endfor %}
     </div>
-    
+
 </div>
 {% endblock %}

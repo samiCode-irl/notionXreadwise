@@ -1,11 +1,10 @@
-from flask import render_template, request, url_for, flash, redirect
+from flask import render_template, request, url_for, flash, redirect, abort
 from app import app, bcrypt, db
 from datetime import date
 from app.forms import SignUpForm, LoginForm
 from app.models import User, Highlight
 from flask_login import login_user, current_user, logout_user, login_required
 from app.notion import get_highlights, get_daily_highlights, compare_highlights, previous_data, get_tags
-
 
 
 @app.route('/')
@@ -99,9 +98,18 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/tags')
-def tags():
-    data = get_tags()
-    print(data)
-    return data
 
+@app.route('/tag/<string:tag>')
+def tags(tag):
+
+    page = request.args.get('page', 1, type=int)
+    current_tag = get_tags()
+
+    if tag.lower() not in current_tag:
+        abort(404)
+    elif tag.lower() in current_tag:
+        current_tag = tag.lower()
+
+    highlights = Highlight.query.filter(Highlight.user_id == current_user.id)\
+        .order_by(Highlight.id.desc()).all()
+    return render_template('tag_highlights.html', highlights=highlights, tag=current_tag)
