@@ -3,12 +3,11 @@ from notion.client import NotionClient
 from app.models import Highlight
 from sqlalchemy import func
 from app import db
+import re
 
 previous_data = dict()
 
 # Get Client
-
-
 def notion_client():
     client = NotionClient(token_v2=current_user.token_v2)
     return client
@@ -23,7 +22,8 @@ def get_highlights(link):
     for child in page.children:
         if child.type == "bulleted_list":
             highlight = Highlight(
-                title=page.title, highlight=child.title, author=page.author, tags=str(page.tags), user_id=current_user.id)
+                title=page.title, highlight=child.title, author=page.author, tags=str(
+                    page.tags), user_id=current_user.id)
             db.session.add(highlight)
 
     db.session.commit()
@@ -38,6 +38,7 @@ def get_daily_highlights(no):
 
 # Compare highlights
 def compare_highlights(highlights, time):
+    confirmed_list = highlights
     if time not in previous_data:
         previous_data[time] = highlights
         return previous_data[time]
@@ -49,3 +50,17 @@ def compare_highlights(highlights, time):
                 confirmed_list.append(get_daily_highlights(1))
 
         return confirmed_list
+
+
+# Get Tags for Highlights
+def get_tags():
+    tag_list = list()
+    tags = db.session.query(Highlight.tags).filter(
+        Highlight.user_id == current_user.id).all()
+    for i in tags:
+        done = re.findall(r"'(.*?)'", str(i))
+        for i in done:
+            if i.lower() not in tag_list:
+                tag_list.append(i.lower())
+
+    return(tag_list)
