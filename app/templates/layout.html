@@ -9,12 +9,13 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href={{ url_for('static', filename="style.css")}}>
     <link rel="shortcut icon" href={{ url_for('static', filename="/images/favicon.ico")}} type="image/x-icon">
+    <script src="https://unpkg.com/scrollreveal"></script>
 </head>
 
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" id="logo" href="{{url_for('index')}}">Notion X Readwise</a>
+        <a class="navbar-brand " id="logo" href="{{url_for('index')}}">Notion X Readwise</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,11 +42,13 @@
                     <ul class="navbar-nav">
                         {% if current_user.is_authenticated %}
                         <li class="nav-item mx-1">
-                            <a class="btn btn-outline-primary btn-md my-1 btn-block" href="{{url_for('logout')}}">Logout</a>
+                            <a class="btn btn-outline-primary btn-md my-1 btn-block"
+                                href="{{url_for('logout')}}">Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item mx-1">
-                            <a class="btn btn-outline-primary btn-md my-1 btn-block" href="{{url_for('login')}}">Login</a>
+                            <a class="btn btn-outline-primary btn-md my-1 btn-block"
+                                href="{{url_for('login')}}">Login</a>
                         </li>
                         <li class="nav-item mx-1">
                             <a class="btn btn-primary btn-md my-1 btn-block" href="{{url_for('signup')}}">Sign Up</a>
@@ -99,15 +102,62 @@
             $("#{{request.endpoint}}").parent().addClass("active");
         })
     </script>
+    {% block script%}
+    {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Smooth Transitions b/w Pages -->
+    <script>
+        var speed = 'slow';
+
+        $('html, body').hide();
+
+        $(document).ready(function () {
+            $('html, body').fadeIn(speed, function () {
+                $('a[href], button[href]').click(function (event) {
+                    var url = $(this).attr('href');
+                    if (url.indexOf('#') == 0 || url.indexOf('javascript:') == 0) return;
+                    event.preventDefault();
+                    $('html, body').fadeOut(speed, function () {
+                        window.location = url;
+                    });
+                });
+            });
+        });
+    </script>
+
+    <!-- Smooth Scrolling -->
+    <script>
+        // handle links with @href started with '#' only
+        $(document).on('click', 'a[href^="#"]', function (e) {
+            // target element id
+            var id = $(this).attr('href');
+
+            // target element
+            var $id = $(id);
+            if ($id.length === 0) {
+                return;
+            }
+
+            // prevent standard hash navigation (avoid blinking in IE)
+            e.preventDefault();
+
+            // top position relative to the document
+            var pos = $id.offset().top;
+
+            // animated top scrolling
+            $('body, html').animate({ scrollTop: pos });
+        });
+    </script>
 
 </body>
 
 <!-- Footer -->
 <footer class="footer">
     <div class="container text-center">
-        <img width="25" src="{{ url_for('static', filename='/images/logo.png')}}" alt="logo">
-        <span class="text-body"><b>notionXreadwise by </b><a href="#"
-                class="badge badge-primary">@samiCode-irl</a></span>
+        <img width="23" class="mr-1" src="{{ url_for('static', filename='/images/logo.png')}}" alt="logo">
+        <span class="text-monospace">notionXreadwise by <a href="#"
+                class="badge badge-primary text-monospace">@samiCode-irl</a></span>
     </div>
 </footer>
 

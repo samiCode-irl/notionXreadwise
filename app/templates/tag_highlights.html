@@ -8,27 +8,33 @@
     <hr class="mt-5 mb-5">
 
     <div class="container">
-        <div>
-            
-            {% for highlight in highlights %}
-            <h3><a id="liberate" class="text-dark" href="{{url_for('highlight', highlight_id=highlight['id'])}}">{{highlight['title']}}</a></h3>
+        
+        {% for highlight in highlights %}
+        <div class="tag-highlight">
+            <h3><a id="liberate" class="text-dark"
+                    href="{{url_for('highlight', highlight_id=highlight['id'])}}">{{highlight['title']}}</a></h3>
             <h6 class="text-secondary">by {{highlight['author']}}</h6>
             <p>{{highlight['highlight']}}</p>
             {% set tags = highlight['tags'].split("\'")%}
-                {% for i in tags %}
-                    {% if i|length > 2 %}
-                        {% if i == tag.title() %}
-                        <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-dark">{{i}}</span></a>
-                        {% else %}
-                        <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-light">{{i}}</span></a>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-
-            <hr class="mt-5 mb-5">
+            {% for i in tags %}
+            {% if i|length > 2 %}
+            {% if i == tag.title() %}
+            <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-dark">{{i}}</span></a>
+            {% else %}
+            <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-light">{{i}}</span></a>
+            {% endif %}
+            {% endif %}
             {% endfor %}
+            <hr class="mt-5 mb-5">
         </div>
+            {% endfor %}
     </div>
 
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    ScrollReveal().reveal('.tag-highlight', { distance: '50px', reset: true, origin:'left', easing: 'ease-in-out', delay:200 });
+</script>
 {% endblock %}

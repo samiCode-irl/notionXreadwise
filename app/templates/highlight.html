@@ -8,7 +8,7 @@
     <h1 class="text-center">Highlight No. {{highlight['id']}}</h1>
     <hr class="mt-4 mb-5">
 
-    <div class="col-8 d-block mx-auto">
+    <div class="highlight col-8 d-block mx-auto">
         {% set tags = highlight['tags'].split("\'")%}
         {% for i in tags %}
         {% if i|length > 2 %}
@@ -28,32 +28,39 @@
         </div>
         {% endif %}
 
-        <!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete Highlight</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Changes can't be reverted are you sure you want to continue?</p>
-                      </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <form action="/highlight/{{highlight['id']}}/delete" method="POST">
-                            <input class="btn btn-danger" type="submit" value="Delete">
-                        </form>
-                    </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Highlight</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Changes can't be reverted are you sure you want to continue?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="/highlight/{{highlight['id']}}/delete" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
     <hr class="mt-5 mb-5">
 </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+    ScrollReveal().reveal('.highlight', { distance: '50px', reset: true, origin: 'left', easing: 'ease-in-out', delay: 200 });
+
+</script>
 {% endblock %}
