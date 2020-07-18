@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}Highlight No. {{highlight['id']}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <h1 class="text-center">Highlight No. {{highlight['id']}}</h1>
+    <hr class="mt-4 mb-5">
+
+    <div class="col-8 d-block mx-auto">
+        {% set tags = highlight['tags'].split("\'")%}
+        {% for i in tags %}
+        {% if i|length > 2 %}
+        <a href="{{url_for('tags', tag=i)}}"><span class="badge badge-pill badge-dark">{{i}}</span></a>
+        {% endif %}
+        {% endfor %}
+        <h3 class="mt-1">{{highlight['title']}}</h3>
+        <h6 class="text-secondary">by {{highlight['author']}}</h6>
+        <p>{{highlight['highlight']}}</p>
+
+        {% if highlight.curator == current_user %}
+        <div>
+            <a href="/highlight/{{highlight['id']}}/update"><button type="button"
+                    class="btn btn-sm btn-primary">Update</button></a>
+            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                data-target="#deleteModal">Delete</button>
+        </div>
+        {% endif %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete Highlight</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Changes can't be reverted are you sure you want to continue?</p>
+                      </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form action="/highlight/{{highlight['id']}}/delete" method="POST">
+                            <input class="btn btn-danger" type="submit" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr class="mt-5 mb-5">
+</div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from app import app, bcrypt
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, ValidationError
+from wtforms import StringField, PasswordField, TextAreaField, BooleanField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 from app.models import User
 
@@ -40,3 +40,10 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+class HighlightForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    author = StringField('Author', validators=[DataRequired()])
+    highlight = TextAreaField('Highlight', validators=[DataRequired()])
+    tags = StringField('Tags')
+    submit = SubmitField('Save')

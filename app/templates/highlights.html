@@ -7,12 +7,19 @@
     <br>
     <h1 class="text-center">Highlights</h1>
     <br>
-    <a class="btn btn-outline-dark btn-lg btn-block" href="/add">Add more highlights</a>
+    <div class="row ">
+        <div class="col">
+            <a class="btn btn-dark btn-lg btn-block col-md mb-1" href="/highlight/new">Create new highlight</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-outline-dark btn-lg btn-block col-md mb-1" href="/add">Add more highlights</a>
+        </div>
+    </div>
     <hr class="mt-5 mb-5">
 
     <div class="col">
         {% for highlight in highlights.items %}
-        <h3>{{highlight['title']}}</h3>
+        <h3><a id="liberate" class="text-dark" href="{{url_for('highlight', highlight_id=highlight['id'])}}">{{highlight['title']}}</a></h3>
         <h6 class="text-secondary">by {{highlight['author']}}</h6>
         <p>{{highlight['highlight']}}</p>
         {% set tags = highlight['tags'].split("\'")%}

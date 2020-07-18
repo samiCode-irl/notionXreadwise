@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <br>
+    <h1 class="text-center">{{legend}}</h1>
+    <hr class="mt-4 mb-4">
+
+    <div class="content-section">
+        <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.title(class="form-control form-control") }}
+                {% endif %}
+            </div>
+            </div>
+            <div class="form-group">
+                {{ form.author.label(class="form-control-label") }}
+                {% if form.author.errors %}
+                    {{ form.author(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.author.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.author(class="form-control form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.highlight.label(class="form-control-label") }}
+                {% if form.highlight.errors %}
+                    {{ form.highlight(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.highlight.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.highlight(class="form-control form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.tags.label(class="form-control-label") }}
+                {% if form.tags.errors %}
+                    {{ form.tags(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.tags.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.tags(class="form-control form-control") }}
+                {% endif %}    
+                <small class="form-text text-muted">Enclose your tags in single quotation marks (''), use commas to seperate them and avoid spaces in tags (e.g. 'Self-Help').</small>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary")}}
+        </div>
+        </form>
+    </div>
+    <hr class="mt-5 mb-5">
+</div>
+
+{% endblock %}
