@@ -148,6 +148,7 @@ def delete_highlight(highlight_id):
     flash('Your highlight is deleted!', 'success')
     return redirect(url_for('highlights'))
 
+
 # To add highlights into the webapp
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -184,3 +185,19 @@ def tags(tag):
     highlights = Highlight.query.filter(Highlight.user_id == current_user.id)\
         .order_by(Highlight.id.desc()).all()
     return render_template('tag_highlights.html', highlights=highlights, tag=current_tag)
+
+
+# Error Handlers
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('errors/404.html'), 404
+
+
+@app.errorhandler(403)
+def error_403(error):
+    return render_template('errors/403.html'), 403
+
+
+@app.errorhandler(500)
+def error_500(error):
+    return render_template('errors/500.html'), 500

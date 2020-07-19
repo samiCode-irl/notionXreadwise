@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}403{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col col-lg-7 col-sm-10">
+        <h1 class="display-4  mt-2">Error 403: Access Forbidden</h1>
+        <p>Sorry, You are not allowed to be here. Please check your account and try again.</p>
+    </div>
+    <div class="mt-5"></div>
+    <div class="row text-center">
+        <div class="col col-lg-8  col-sm-12 d-block mx-auto">
+            <img width="80%" class="text-center" src="{{ url_for('static', filename='/images/access.png')}}"
+                alt="access">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

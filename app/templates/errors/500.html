@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}500{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col col-lg-7 col-sm-10">
+        <h1 class="display-4  mt-2">Error 500: Internal Server Error</h1>
+        <p>Sorry, For the inconvenience. We are working on fixing it right now.</p>
+    </div>
+    <div class="mt-5"></div>
+    <div class="row text-center">
+        <div class="col col-lg-8  col-sm-12 d-block mx-auto">
+            <img width="60%" class="text-center" src="{{ url_for('static', filename='/images/fix.png')}}"
+                alt="fix">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
