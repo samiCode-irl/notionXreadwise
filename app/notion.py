@@ -44,6 +44,10 @@ def compare_highlights(highlights, time):
         return previous_data[time]
     else:
         confirmed_list = previous_data[time]
+
+        if confirmed_list is None:
+            confirmed_list = get_daily_highlights(5)
+            
         for i in confirmed_list:
             if i.user_id != current_user.id:
                 confirmed_list.pop(i)
