@@ -202,6 +202,7 @@ def error_403(error):
 def error_500(error):
     return render_template('errors/500.html'), 500
 
+
 @app.errorhandler(Exception)
 def handle_bad_request(e):
     return 'bad request!', 400
